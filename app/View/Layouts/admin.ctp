@@ -150,13 +150,20 @@
 <!--<script src="bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>-->
 
 <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-// <script>
+ <script>
 //     $(document).ready(function() {
 //         $('#dataTables-example').DataTable({
 //             responsive: true
 //         });
 //     });
-// </script>
+$(document).ready(function(){
+    $("#addpart").click(function(){
+        var partnum = $(".part").length;
+        $("#parts").append('<div class="part"><label>Audio '+(partnum+1)+'</label><input name="data[Playlist][audio]['+partnum+']" type="file" class="form-control"> <div class="form-group"> <label>Text '+(partnum+1)+'</label> <textarea class="form-control" rows="3" name="data[Playlist][text]['+partnum+']"]></textarea> </div> </div>');
+    });
+});
+
+</script>
 </body>
 
 </html>

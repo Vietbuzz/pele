@@ -57,27 +57,50 @@ class PlaylistsController extends AppController
         $this->layout = 'admin';
         if (!empty($this->data)) {
             //retype data
-            if(!empty($this->data['Playlist']["image"])){
-                $imageFile = new File($this->request->data["Playlist"]["image"]['tmp_name']);
+            if(!empty($this->data['Playlist']["image"]["name"])){
+                $imageFile = $this->request->data["Playlist"]['image'];
+                //$imageFile = new File($this->request->data["Playlist"]["image"]['tmp_name']);
+                pr($imageFile);
+                if($this->uploadData("Playlist/img", array("jpg", "png"), $imageFile)){
+                    echo 'ok';
+                    $this->request->data['Playlist']["image"]= "files/Playlist/img/".$this->request->data['Playlist']["image"]["name"];
+                }else{
+                    pr($this->uploadData("Playlist/img", array("jpg", "png"), $imageFile)) ;
+                }
+            }else{
+                echo "không có ";
+                $this->request->data['Playlist']["image"]= "";
             }
-            pr($savedata);
+            foreach($this->request->data["Playlist"]['audio'] as $key => $audio){
+                if(!empty($audio["name"])){
+                    //$imageFile = $this->request->data["Playlist"]['image'];
+                    //$imageFile = new File($this->request->data["Playlist"]["image"]['tmp_name']);
+                    pr($audio);
+                    $this->uploadData("Playlist/Audio", array("mp3", "wav"), $audio);
+                }
+                $this->request->data["Playlist"]["audio"][$key] = $this->request->data["Playlist"]["audio"][$key]["name"];
+            }
+            pr($this->request->data);
 
-//            $this->Playlist->create();
-//            if ($this->Playlist->save($this->data)) {
-//                $this->flash(__('Post saved.', true), array('action' => 'list',));
-//                $this->redirect(array("action"=>"admin_list"));
-//            } else {
-//            }
+            $this->Playlist->create();
+            if ($this->Playlist->save($this->data)) {
+                $this->flash(__('Post saved.', true), array('action' => 'list',));
+                $this->redirect(array("action"=>"admin_list"));
+            } else {
+            }
         }
     }
 
     public function uploadData($folder =null, $tail =[], $file){
-        $file_name = $file["name"];
+        $file_name =$file["name"];
         $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
         if(in_array($ext, $tail)){
-            move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/'.$folder.$file['name']);
+            $fileObject = new File($file['tmp_name']);
+            move_uploaded_file($file['tmp_name'], WWW_ROOT . 'files/'.$folder.'/'.$file['name']);
+            return true;
         } else{
-            echo "This file is invailid";
+            //$this->Session->setFlash(__('Image file for playlist is invailid, Please put an jpg or png file.'));
+            return false;
         }
 
     }

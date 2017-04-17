@@ -38,12 +38,13 @@
             </div>
 
         <!-- List of parts in this playlist-->
+        <div class="row">
             <div class="col-lg-1"></div>
-            <div class="col-lg-10">
+            <div class="col-lg-10" id="parts">
                 <h2 class="page-header">Parts
                 </h2>
-                <?php for ($partnum=0; $partnum<5; $partnum++):?>
-
+                <?php for ($partnum=0; $partnum<1; $partnum++):?>
+                    <div class="part">
                     <?php echo $this->Form->input('Playlist.audio.'.($partnum), array(
                         'type'=>'file',
                         'between'=>'<br />',
@@ -57,12 +58,16 @@
                             'class' => 'form-control',
                         ))?>
                     </div>
+                    </div>
                     <br><br>
                 <?php endfor?>
             </div>
-
-
+            <div class="col-lg-1"></div>
+        </div>
+        <div class="row"><div id="addpart"><h4><strong>Add new part</strong></h4></div></div>
+        <br><br>
+        <!-- script here-->
         <?php echo $this->Form->end('Submit');?>
-        <?php pr($this->request->data);?>
+        <?php //pr($this->request->data);?>
     </div>
 </div>

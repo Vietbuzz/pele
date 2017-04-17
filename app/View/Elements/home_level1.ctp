@@ -13,8 +13,8 @@
             <div class="carousel-inner">
                 <?php
                 $count= count($resultsLv1);
-                $k = (int)($count/4);
-                for($i=0; $i<=$k; $i++):
+                $k = CEIL($count/4);
+                for($i=0; $i<$k; $i++):
                 ?>
                 <div class="item <?php echo ($i==0)?'active':''; ?>">
                     <div class="row">
@@ -22,8 +22,9 @@
                         <div class="col-md-3">
                             <a href="#" class="thumbnail">
                                 <?php
-                                echo $this->Html->image($resultsLv1[4*$i+$j]['Playlist']['image'], array(
+                                echo $this->Html->image("../".$resultsLv1[4*$i+$j]['Playlist']['image'], array(
                                     'width'=>'200px',
+                                    'height'=>'150px',
                                     'alt'=>'can not load image',
                                 ))?>
                             </a>
