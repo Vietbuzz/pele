@@ -20,7 +20,7 @@
                     <div class="row">
                         <?php for($j=0; 4*$i+$j<$count && $j<4; $j++):?>
                         <div class="col-md-3">
-                            <a href="#" class="thumbnail">
+                            <a href="practice/<?php echo $resultsLv1[4*$i+$j]['Playlist']['_id'] ?>" class="thumbnail">
                                 <?php
                                 echo $this->Html->image("../".$resultsLv1[4*$i+$j]['Playlist']['image'], array(
                                     'width'=>'200px',
@@ -40,7 +40,7 @@
         </div>
 
     </div>
-    <div class="col-md-3"><?php pr($k); ?></div>
+    <div class="col-md-3"><?php pr($resultsLv1); ?></div>
 </div>
 
 
