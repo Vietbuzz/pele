@@ -68,7 +68,7 @@
 	<?php
 		echo $this->Html->script('jquery-3.2.0.min');
 		echo $this->Html->script('../bower_components/bootstrap/dist/js/bootstrap.min');
-		echo $this->Html->script('../dist/js/sb-admin-2');
+		//echo $this->Html->script('../dist/js/sb-admin-2');
 		echo $this->Html->script('myscript');
 	?>
 <script>
@@ -77,7 +77,20 @@
 			pause: true,
 			interval: false,
 		});
+		//maybe conflig
+		$(".ducatipart").click(function(){
+			$(this).children("input").attr("checked", true);
+		});
 	});
+
+	function inttext(var textstr){
+		var originText = textstr;
+		var wordList = originText.split(" ");
+		//wordList.push("");
+		var typeList = [];
+		var i=0;
+		var temp = "";
+	}
 </script>
 </body>
 </html>

@@ -120,10 +120,19 @@
             <a href="#" class="list-group-item disabled">
                 Same Level
             </a>
-            <a href="#" class="list-group-item">Informal Greeting</a>
-            <a href="#" class="list-group-item">Morbi leo risus</a>
-            <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-            <a href="#" class="list-group-item">Vestibulum at eros</a>
+            <?php foreach($playlist["Playlist"]["text"] as $key=>$text): ?>
+                <?php if(!empty($playlist["Playlist"]["audio"][$key])):?>
+                <a href="#" class="list-group-item ducatipart" id="<?php $key?>">
+                    part <?php echo $key+1?>
+                    <input type="checkbox" disabled>
+                </a>
+                <?php endif;?>
+            <?php endforeach;?>
+
+<!--            <a href="#" class="list-group-item">Informal Greeting</a>-->
+<!--            <a href="#" class="list-group-item">Morbi leo risus</a>-->
+<!--            <a href="#" class="list-group-item">Porta ac consectetur ac</a>-->
+<!--            <a href="#" class="list-group-item">Vestibulum at eros</a>-->
         </div>
     </div>
 
