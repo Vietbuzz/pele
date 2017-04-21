@@ -1,9 +1,9 @@
 <script>
     function isDelete (msg){
         if (window.confirm(msg)){
-            return true
+            return true;
         }
-        ;return false
+        return false;
     }
 </script>
 <div class="posts form">
@@ -27,6 +27,36 @@
             );
             ?>
         </div>
+        <br><br>
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10" id="parts">
+                <h2 class="page-header">Parts
+                </h2>
+                <?php foreach($this->Form->data['Playlist']['text'] as $key=>$text):?>
+                    <div class="part">
+                        <?php echo $this->Form->input('Playlist.audio.'.($key), array(
+                            'type'=>'file',
+                            'between'=>'<br />',
+                            'class' => 'form-control',
+                            'label'=> 'audio '.($key +1)
+                        )); ?>
+                        <div class="form-group">
+                            <label>Text <?php echo $key +1?></label>
+                            <?php echo $this->Form->textarea('Playlist.text.'.($key), array(
+                                'rows' => 3,
+                                'class' => 'form-control',
+                            ))?>
+                        </div>
+                    </div>
+                    <br><br>
+                <?php endforeach;?>
+            </div>
+            <div class="col-lg-1"></div>
+        </div>
+        <div class="row"><div id="addpart"><h4><strong>Add new part</strong></h4></div></div>
+        <br><br>
+
         <?php
 
         pr(

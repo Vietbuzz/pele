@@ -16,7 +16,8 @@
             <div class="form-group">
                 <?php echo $this->Form->input('name', array(
                     'type' => 'text',
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    //'required'=>true
                 ))?>
             </div>
 

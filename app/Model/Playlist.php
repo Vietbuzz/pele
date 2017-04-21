@@ -7,9 +7,10 @@
  */
 class Playlist extends AppModel {
     public $primaryKey = '_id';
-//    public $validate = array(
-//        'name'=> array(
-//            'require'=>true,
-//        )
-//    );
+    public $validate = array(
+        'name'=> array(
+            'required'=>'true',
+            'rule'=>'isUnique'
+        )
+    );
 }
