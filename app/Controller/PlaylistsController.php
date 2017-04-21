@@ -37,8 +37,25 @@ class PlaylistsController extends AppController
 
 
     public function practice($id = null){
-        $playlist = $this->Playlist->find('first','_id');
+        $playlist = $this->Playlist->find('first',array(
+            'conditions'=> array('_id'=>$id)
+        ));
         $this->set('playlist', $playlist);
+        $this->set('idplaylist', $id);
+    }
+
+    public function returnText(){
+        if( $this->request->is('ajax') ) {
+            $idPlaylist = $this->request->data["idplaylist"];
+            $keyPart = $this->request->data["keyid"];
+
+            $playlist = $this->Playlist->find('first',array(
+                'conditions'=> array('_id'=>$idPlaylist)
+            ));
+
+            echo json_encode(array(0=>$playlist["Playlist"]["text"][$keyPart],1=>$playlist["Playlist"]["name"]."/".$playlist["Playlist"]["audio"][$keyPart]));
+            exit;
+    }
     }
 
 //admin-----------------------------------------------

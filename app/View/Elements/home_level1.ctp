@@ -40,7 +40,7 @@
         </div>
 
     </div>
-    <div class="col-md-3"><?php pr($resultsLv1); ?></div>
+    <div class="col-md-3"><?php //pr($resultsLv1); ?></div>
 </div>
 
 

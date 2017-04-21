@@ -12,6 +12,7 @@
 
             var typeContent = document.getElementById("typingText").value;
             var x = event.which || event.keyCode;
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
             temp += String.fromCharCode(x).toLowerCase();
             KeyCheck(event, typeContent);
             //document.getElementById("demo").innerHTML = "The Unicode value is: " + i+ temp + "   "+ typeList.join(" ");
@@ -45,6 +46,7 @@
                         //document.getElementsById("iindex").innerHtml= i + " " + wordList.length;
                         temp = temp.split(' ').join('');
                         console.log('w'+temp+'w');
+                        temp= temp.trim();
                         if(temp == wordList[i].toLowerCase()){
                             typeList.push(temp);
                         } else {
@@ -63,6 +65,7 @@
                         }
                         console.log(temp);
                         document.getElementsByTagName("input")[0].disabled = true;
+                        document.getElementsByTagName("audio")[0].pause();
                         i++;
                     }
                     break;
@@ -71,7 +74,6 @@
             }
         }
     </script>
-
     <div class="col-lg-3">
         <div class="list-group">
             <a href="#" class="list-group-item disabled">
@@ -84,36 +86,24 @@
         </div>
     </div>
     <div class="col-lg-6 center">
-        <?php echo $this->Html->media($playlist["Playlist"]["name"]."/".$playlist["Playlist"]["audio"][0], array( 'controls', 'loop'))?>
+        <?php echo $this->Html->media($playlist["Playlist"]["name"]."/".$playlist["Playlist"]["audio"][0], array( 'controls', 'loop', 'id'=>'audio'))?>
         <br>
         <input class="form-control" id="typingText" type="text" size="40" onkeydown="myFunction(event)">
 
         <p id="demo"></p>
         <br>
         <table class="table">
-            <tr>
+            <tr id="originrow">
                 <td><div>True Text: </div></td>
-                <td><div class="origin"></div></td>
-                <td><div class="origin"></div></td>
-                <td><div class="origin"></div></td>
-                <td><div class="origin"></div></td>
-                <td><div class="origin"></div></td>
-                <td><div class="origin"></div></td>
-                <td><div class="origin"></div></td>
-                <td><div class="origin"></div></td>
+<!--                <td><div class="origin"></div></td>-->
             </tr>
-            <tr>
+            <tr id="yourrow">
                 <td><div>Your Text: </div></td>
-                <td><div class="your"></div></td>
-                <td><div class="your"></div></td>
-                <td><div class="your"></div></td>
-                <td><div class="your"></div></td>
-                <td><div class="your"></div></td>
-                <td><div class="your"></div></td>
-                <td><div class="your"></div></td>
-                <td><div class="your"></div></td>
+<!--                <td><div class="your"></div></td>-->
             </tr>
         </table>
+        <div id="testtext"></div>
+        <div id="testchar"></div>
     </div>
     <div class="col-lg-3">
         <div class="list-group">
@@ -122,7 +112,7 @@
             </a>
             <?php foreach($playlist["Playlist"]["text"] as $key=>$text): ?>
                 <?php if(!empty($playlist["Playlist"]["audio"][$key])):?>
-                <a href="#" class="list-group-item ducatipart" id="<?php $key?>">
+                <a href="#" class="list-group-item ducatipart" id="<?php echo $key?>">
                     part <?php echo $key+1?>
                     <input type="checkbox" disabled>
                 </a>

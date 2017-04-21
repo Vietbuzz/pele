@@ -80,16 +80,37 @@
 		//maybe conflig
 		$(".ducatipart").click(function(){
 			$(this).children("input").attr("checked", true);
+			var key = $(this).attr("id");
+			var idplaylist='<?php echo $idplaylist?>';
+			$.post('http://192.168.33.18/pele/playlists/returnText/', {'keyid': key,'idplaylist': idplaylist }, function(data){
+
+				$("#testtext").html($.parseJSON(data)[0]);
+				$("#originrow").empty();
+				$("#yourrow").empty();
+				inittext($.parseJSON(data)[0]);
+				$("#audio").attr("src","/pele/files/"+$.parseJSON(data)[1]);
+				$("#audio").attr("autoplay", true);
+				$("#typingText").val("");
+				$("#typingText").attr('disabled', false);
+			});
+
+			//var textstr = '
+			//inittext(textstr);
+			//alert(textstr);
 		});
 	});
 
-	function inttext(var textstr){
-		var originText = textstr;
-		var wordList = originText.split(" ");
+	function inittext(textstr){
+		 originText = textstr;
+		 wordList = originText.split(" ");
 		//wordList.push("");
-		var typeList = [];
-		var i=0;
-		var temp = "";
+		 typeList = [];
+		 i=0;
+		 temp = "";
+		for( var count=0; count<wordList.length; count++){
+			$("#originrow").append('<td><div class="origin"></div></td>');
+			$("#yourrow").append('<td><div class="your"></div></td>');
+		}
 	}
 </script>
 </body>
