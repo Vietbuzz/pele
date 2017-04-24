@@ -5,15 +5,11 @@
         //wordList.push("");
         var typeList = [];
         var i=0;
-        var temp = "";
 
         //=====================================
         function myFunction(event) {
 
             var typeContent = document.getElementById("typingText").value;
-            var x = event.which || event.keyCode;
-            var regex = new RegExp("^[a-zA-Z0-9]+$");
-            temp += String.fromCharCode(x).toLowerCase();
             KeyCheck(event, typeContent);
             //document.getElementById("demo").innerHTML = "The Unicode value is: " + i+ temp + "   "+ typeList.join(" ");
             if(i>0){
@@ -32,40 +28,39 @@
                     if(typeContent.charAt(typeContent.length -1)==' '){
                         event.preventDefault();
                     } else{
-                        temp = temp.slice(0, -2);
+                        //temp = temp.slice(0, -2);
                     }
                     break;
                 case 46:
                     event.preventDefault();
                     break;
                 case 32:
+                    var inputValue = document.getElementsByTagName("input")[0].value;
+                    var typeArray = inputValue.split(" ");
                     if(typeContent.charAt(typeContent.length -1)==' ' || typeContent.length==0){
                         event.preventDefault();
                     } else if(i< wordList.length-1){
                         //i=i+1;
                         //document.getElementsById("iindex").innerHtml= i + " " + wordList.length;
-                        temp = temp.split(' ').join('');
-                        console.log('w'+temp+'w');
-                        temp= temp.trim();
-                        if(temp == wordList[i].toLowerCase()){
-                            typeList.push(temp);
+                        if(typeArray[typeArray.length-1].toLowerCase() == wordList[i].toLowerCase()){
+                            typeList.push(typeArray[typeArray.length-1]);
                         } else {
-                            typeList.push("<strong>"+temp+"</strong>");
+                            typeList.push("<strong>"+typeArray[typeArray.length-1]+"</strong>");
                         }
                         console.log(typeList);
-                        temp = "";
                         i++;
                         console.log(i+" "+wordList.length);
                     } else{
                         temp = temp.slice(0, -1);
-                        if(temp == wordList[i].toLowerCase()){
-                            typeList.push(temp);
+                        if(typeArray[typeArray.length-1].toLowerCase() == wordList[i].toLowerCase()){
+                            typeList.push(typeArray[typeArray.length-1]);
                         } else {
-                            typeList.push("<strong>"+temp+"</strong>");
+                            typeList.push("<strong>"+typeArray[typeArray.length-1]+"</strong>");
                         }
-                        console.log(temp);
+                        console.log(typeArray[typeArray.length-1]);
                         document.getElementsByTagName("input")[0].disabled = true;
                         document.getElementsByTagName("audio")[0].pause();
+                        console.log(typeList);
                         i++;
                     }
                     break;

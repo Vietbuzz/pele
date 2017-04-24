@@ -7,7 +7,7 @@
     }
 </script>
 <div class="posts form">
-    <?php echo $this->Form->create('Playlist' , array( 'type' => 'post' ));?>
+    <?php echo $this->Form->create('Playlist' , array( 'type' => 'file' ));?>
     <fieldset>
         <legend><?php __('Edit Playlist');?></legend>
         <?php echo $this->Form->hidden('_id'); ?>
@@ -35,11 +35,13 @@
                 </h2>
                 <?php foreach($this->Form->data['Playlist']['text'] as $key=>$text):?>
                     <div class="part">
+                        <?php echo $this->Html->media($this->data["Playlist"]["name"]."/".$this->data["Playlist"]["audio"][$key], array( 'controls', 'id'=>'audio'))?>
                         <?php echo $this->Form->input('Playlist.audio.'.($key), array(
                             'type'=>'file',
                             'between'=>'<br />',
                             'class' => 'form-control',
-                            'label'=> 'audio '.($key +1)
+                            'label'=> 'change audio '.($key +1),
+                            'required'=>false,
                         )); ?>
                         <div class="form-group">
                             <label>Text <?php echo $key +1?></label>
@@ -59,9 +61,9 @@
 
         <?php
 
-        pr(
-            $this->Form->data['Playlist']['level']
-        );
+        pr($this->Form->data['Playlist']['level']);
+        pr($this->Form->data);
+        $temp = $this->request->data;
         ?>
     </fieldset>
     <?php echo $this->Form->end('Submit');?>

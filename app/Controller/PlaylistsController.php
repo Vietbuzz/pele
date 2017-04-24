@@ -114,6 +114,46 @@ class PlaylistsController extends AppController
         }
     }
 
+    /**
+     * action edit playlist
+     * @param null $id
+     *
+     */
+    public function admin_edit($id = null) {
+        $this->layout = 'admin';
+        if (!$id && empty($this->data)) {
+            $this->flash(__('Invalid Playlist', true), array('action' => 'admin_list'));
+        }
+        if (!empty($this->request->data)) {
+            foreach($this->request->data["Playlist"]['audio'] as $key => $audio){
+                if(!empty($audio["name"])){
+                    $this->uploadData("files/".$this->data["Playlist"]["name"], array("mp3", "wav"), $audio);
+                    $this->request->data["Playlist"]["audio"][$key] = $this->request->data["Playlist"]["audio"][$key]["name"];
+                } else{
+                    $this->request->data["Playlist"]["audio"][$key] = $this->Playlist->read(null, $id)["Playlist"]["audio"][$key];
+                }
+
+            }
+            //pr($this->data); exit;
+            if ($this->Playlist->save($this->data)) {
+                $this->redirect(array("action"=>"admin_list"));
+            } else {
+            }
+        }
+        if (empty($this->data)) {
+            $this->data = $this->Playlist->read(null, $id);
+            //$this->data = $this->Post->find('first', array('conditions' => array('_id' => $id)));
+
+        }
+    }
+
+    /**
+     * @param null $folder
+     * @param array $tail
+     * @param $file
+     * @return bool
+     */
+
     public function uploadData($folder =null, $tail =[], $file){
         $file_name =$file["name"];
         $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
@@ -134,27 +174,6 @@ class PlaylistsController extends AppController
     }
 
 
-    /**
-     * action edit playlist
-     * @param null $id
-     *
-     */
-    public function admin_edit($id = null) {
-        $this->layout = 'admin';
-        if (!$id && empty($this->data)) {
-            $this->flash(__('Invalid Playlist', true), array('action' => 'admin_list'));
-        }
-        if (!empty($this->data)) {
-            if ($this->Playlist->save($this->data)) {
-                $this->redirect(array("action"=>"admin_list"));
-            } else {
-            }
-        }
-        if (empty($this->data)) {
-            $this->data = $this->Playlist->read(null, $id);
-            //$this->data = $this->Post->find('first', array('conditions' => array('_id' => $id)));
-        }
-    }
 
     /**
      * action delete Playlist
