@@ -80,7 +80,7 @@
 		//maybe conflig
 		$(".ducatipart").click(function(){
 			$(this).children("input").attr("checked", true);
-			var key = $(this).attr("id");
+			 key = $(this).attr("id");
 			var idplaylist='<?php echo $idplaylist?>';
 			$.post('http://192.168.33.18/pele/playlists/returnText/', {'keyid': key,'idplaylist': idplaylist }, function(data){
 
@@ -106,11 +106,18 @@
 		//wordList.push("");
 		 typeList = [];
 		 i=0;
-		 temp = "";
+		truePoint=0;
 		for( var count=0; count<wordList.length; count++){
 			$("#originrow").append('<td><div class="origin"></div></td>');
 			$("#yourrow").append('<td><div class="your"></div></td>');
 		}
+	}
+	function addHistory(point){
+		var idplaylist='<?php echo $idplaylist?>';
+		$.post('http://192.168.33.18/pele/users/history', {'partid': key, 'idplaylist': idplaylist, 'point': point}, function(data){
+				console.log(data);
+			}
+		);
 	}
 </script>
 </body>

@@ -82,8 +82,17 @@ class UsersController extends AppController
         }
     }
 
-    // public function login(){
-    // }
+     public function login(){
+         if($this->request->is('post')){
+             if($this->Auth->login()){
+                 $this->redirect($this->Auth->redirect());
+
+             }else{
+                 $this->Session->setFlash('Wrong username or password','default', array('class'=>'alert alert-danger'), 'auth' );
+             }
+         }
+         $this->set('title_for_layout', 'Login pels');
+     }
 
     public function admin_logout(){
         $this->redirect($this->Auth->logout());
@@ -93,8 +102,49 @@ class UsersController extends AppController
 
     }
 
+    public function profile(){
 
+    }
 
+    public function history(){
+        if( $this->request->is('ajax')) {
+            $idPlaylist = $this->request->data["idplaylist"];
+            $partId = $this->request->data["partid"];
+            $point = $this->request->data["point"];
+            $this->loadModel("Playlist");
 
+            $playlist = $this->Playlist->find('first',array(
+                'conditions'=> array('_id'=>$idPlaylist)
+            ));
+            if($this->Auth->login()){
+                $user = $this->User->read(null, $this->Auth->user()["_id"]);
+                pr($user["User"]["History"]);exit;
+//                $user = array(
+//                    "User"=>array(
+//                        "_id" =>$this->Auth->user()["_id"],
+//                        "History"=> array(
+//                            $playlist["Playlist"]["name"]=>array(
+//                                'id' => $idPlaylist,
+//                                'parts'=> array(
+//                                    $partId => $point
+//                                )
+//                            )
+//                        )
+//                    )
+//                );
+
+                $this->User->save($user);
+                pr($user); exit;
+                //echo $playlist["Playlist"]["_id"];
+
+                //echo $user["User"]["History"]["Can You Say That Again"]["parts"][1];  exit;
+            }else {
+                echo "Đã login đếu đâu!"; exit;
+            }
+
+             //pr($history);  exit;
+            //echo json_encode(array(0=>$playlist["Playlist"]["text"][$keyPart],1=>$playlist["Playlist"]["name"]."/".$playlist["Playlist"]["audio"][$keyPart]));
+        }
+    }
 }
 ?>

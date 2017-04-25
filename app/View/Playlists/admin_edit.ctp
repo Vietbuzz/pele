@@ -18,7 +18,7 @@
                 "default"=>$this->data['Playlist']['level'])); ?>
         </div>
         <div class="form-group">
-             <?php echo $this->Form->input('name', array("class"=>"form-control")); ?>
+            <?php echo $this->Form->input('name', array("class"=>"form-control")); ?>
         </div>
         <div class="form-group">
             <?php

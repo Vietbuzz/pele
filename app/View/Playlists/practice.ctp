@@ -4,7 +4,9 @@
         var wordList = originText.split(" ");
         //wordList.push("");
         var typeList = [];
+        var truePoint =0;
         var i=0;
+        var key;
 
         //=====================================
         function myFunction(event) {
@@ -44,6 +46,7 @@
                         //document.getElementsById("iindex").innerHtml= i + " " + wordList.length;
                         if(typeArray[typeArray.length-1].toLowerCase() == wordList[i].toLowerCase()){
                             typeList.push(typeArray[typeArray.length-1]);
+                            truePoint += 1;
                         } else {
                             typeList.push("<strong>"+typeArray[typeArray.length-1]+"</strong>");
                         }
@@ -51,15 +54,16 @@
                         i++;
                         console.log(i+" "+wordList.length);
                     } else{
-                        temp = temp.slice(0, -1);
                         if(typeArray[typeArray.length-1].toLowerCase() == wordList[i].toLowerCase()){
                             typeList.push(typeArray[typeArray.length-1]);
+                            truePoint += 1;
                         } else {
                             typeList.push("<strong>"+typeArray[typeArray.length-1]+"</strong>");
                         }
                         console.log(typeArray[typeArray.length-1]);
                         document.getElementsByTagName("input")[0].disabled = true;
                         document.getElementsByTagName("audio")[0].pause();
+                        addHistory(truePoint+'/'+wordList.length);
                         console.log(typeList);
                         i++;
                     }

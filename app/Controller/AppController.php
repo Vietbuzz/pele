@@ -31,17 +31,29 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
-	public $components = array('DebugKit.Toolbar', 'Session');
+	public $components = array('DebugKit.Toolbar', 'Session',
+		'Auth' =>array(
+			'loginAction' => '/login',
+			'authError' => 'Please Login.',
+			'flash' => array(
+				'element' => 'default',
+				'key'=> 'auth',
+				'params'=> array('class'=> 'aleart alert-danger')
+			),
+			'loginRedirect'=> '/'
+		)
+	);
 
 	public $helpers = array( "Session", 'Paginator');
 
-	// public function beforeFilter(){
- //        $this->Auth->userModel = 'User';
- //        $this->Auth->fields = array('username' => 
- //            'username', 'password' => 'password');
- //        $this->Auth->loginAction = array('admin' => false, 'controller' => 
- //            'users', 'action' => 'login');
- //        $this->Auth->loginRedirect = array('controller' => 
- //            'users', 'action' => 'index');
- //    }
+	public function beforefilter(){
+		$this->Auth->allow('home');
+		$this->set('user_info', $this->getUser());
+	}
+
+	public function getUser(){
+		if($this->Auth->login()){
+			return $this->Auth->user();
+		}
+	}
 }
