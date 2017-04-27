@@ -81,8 +81,8 @@
 		$(".ducatipart").click(function(){
 			$(this).children("input").attr("checked", true);
 			 key = $(this).attr("id");
-			var idplaylist='<?php echo $idplaylist?>';
-			$.post('http://192.168.33.18/pele/playlists/returnText/', {'keyid': key,'idplaylist': idplaylist }, function(data){
+			var idplaylist='<?php echo (isset($idplaylist))? $idplaylist: ""?>';
+			$.post('<?php echo Router::url(array('controller'=>'playlists','action'=>'returnText'));?>', {'keyid': key,'idplaylist': idplaylist }, function(data){
 
 				$("#testtext").html($.parseJSON(data)[0]);
 				$("#originrow").empty();
@@ -113,8 +113,8 @@
 		}
 	}
 	function addHistory(point){
-		var idplaylist='<?php echo $idplaylist?>';
-		$.post('http://192.168.33.18/pele/users/history', {'partid': key, 'idplaylist': idplaylist, 'point': point}, function(data){
+		var idplaylist='<?php echo (isset($idplaylist))? $idplaylist: ""?>';
+		$.post("<?php echo Router::url(array('controller'=>'users','action'=>'history'));?>", {'partid': key, 'idplaylist': idplaylist, 'point': point}, function(data){
 				console.log(data);
 			}
 		);

@@ -103,6 +103,40 @@ class UsersController extends AppController
     }
 
     public function profile(){
+        if($this->Auth->login()){
+            $userInAuth= $this->Auth->user();
+            $user = $this->User->find('first', array(
+                'conditions'=> array('_id'=> $userInAuth["_id"])
+            ));
+            $this->loadModel("Playlist");
+            if(isset($user["User"]["history"])){
+                foreach ($user["User"]["history"] as $key=>$item) {
+                    $playlists[] = $this->Playlist->find('first', array(
+                        'conditions'=> array('_id'=> $key),
+                        'fields'=>array('name','text')
+                    ));
+                }
+            }else {
+                $playlists = [];
+            }
+
+
+            $this->set('user_info', $user);
+            $this->set('playlists', $playlists);
+            if (!empty($this->request->data)) {
+
+                //pr($this->data); exit;
+                if ($this->User->save($this->data)) {
+                    $this->redirect(array("action"=>"profile"));
+                } else {
+                }
+            }
+            if (empty($this->data)) {
+                $this->data = $this->User->read(null, $userInAuth["_id"]);
+                //$this->data = $this->Post->find('first', array('conditions' => array('_id' => $id)));
+            }
+        }
+
 
     }
 
@@ -118,21 +152,7 @@ class UsersController extends AppController
             ));
             if($this->Auth->login()){
                 $user = $this->User->read(null, $this->Auth->user()["_id"]);
-                pr($user["User"]["History"]);exit;
-//                $user = array(
-//                    "User"=>array(
-//                        "_id" =>$this->Auth->user()["_id"],
-//                        "History"=> array(
-//                            $playlist["Playlist"]["name"]=>array(
-//                                'id' => $idPlaylist,
-//                                'parts'=> array(
-//                                    $partId => $point
-//                                )
-//                            )
-//                        )
-//                    )
-//                );
-
+                $user["User"]["history"][$idPlaylist][$partId]= $point;
                 $this->User->save($user);
                 pr($user); exit;
                 //echo $playlist["Playlist"]["_id"];
