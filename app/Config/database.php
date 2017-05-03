@@ -81,8 +81,8 @@ class DATABASE_CONFIG {
 	public $test = array(
 		'datasource' => 'Mongodb.MongodbSource',
 		'host' => 'localhost',
-		'port' => '27017',
-		'database' => 'test_pels',
+		'port' => 27017,
+		'database' => 'pels',
 		//'encoding' => 'utf8',
 	);
 }

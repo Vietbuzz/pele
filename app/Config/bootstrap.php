@@ -71,6 +71,7 @@ Cache::config('default', array('engine' => 'File'));
  */
 CakePlugin::load('DebugKit');
 CakePlugin::load('Mongodb');
+//require_once "../Vendor/vendor//autoload.php";
 /**
  * To prefer app translation over plugin translation, you can set
  *

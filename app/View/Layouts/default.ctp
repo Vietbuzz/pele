@@ -16,6 +16,9 @@
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
+
+	echo $this->Html->script('jquery-3.2.0.min');
+	echo $this->Html->script('../bower_components/bootstrap/dist/js/bootstrap.min');
 	?>
 	<style>
 		
@@ -66,59 +69,10 @@
 	</div>
 	<?php echo $this->element('sql_dump'); ?>
 	<?php
-		echo $this->Html->script('jquery-3.2.0.min');
-		echo $this->Html->script('../bower_components/bootstrap/dist/js/bootstrap.min');
 		//echo $this->Html->script('../dist/js/sb-admin-2');
-		echo $this->Html->script('myscript');
+		//echo $this->Html->script('myscript');
 	?>
 <script>
-	$(document).ready(function() {
-		$('#media, #media2').carousel({
-			pause: true,
-			interval: false,
-		});
-		//maybe conflig
-		$(".ducatipart").click(function(){
-			$(this).children("input").attr("checked", true);
-			 key = $(this).attr("id");
-			var idplaylist='<?php echo (isset($idplaylist))? $idplaylist: ""?>';
-			$.post('<?php echo Router::url(array('controller'=>'playlists','action'=>'returnText'));?>', {'keyid': key,'idplaylist': idplaylist }, function(data){
-
-				$("#testtext").html($.parseJSON(data)[0]);
-				$("#originrow").empty();
-				$("#yourrow").empty();
-				inittext($.parseJSON(data)[0]);
-				$("#audio").attr("src","/pele/files/"+$.parseJSON(data)[1]);
-				$("#audio").attr("autoplay", true);
-				$("#typingText").val("");
-				$("#typingText").attr('disabled', false);
-			});
-
-			//var textstr = '
-			//inittext(textstr);
-			//alert(textstr);
-		});
-	});
-
-	function inittext(textstr){
-		 originText = textstr;
-		 wordList = originText.split(" ");
-		//wordList.push("");
-		 typeList = [];
-		 i=0;
-		truePoint=0;
-		for( var count=0; count<wordList.length; count++){
-			$("#originrow").append('<td><div class="origin"></div></td>');
-			$("#yourrow").append('<td><div class="your"></div></td>');
-		}
-	}
-	function addHistory(point){
-		var idplaylist='<?php echo (isset($idplaylist))? $idplaylist: ""?>';
-		$.post("<?php echo Router::url(array('controller'=>'users','action'=>'history'));?>", {'partid': key, 'idplaylist': idplaylist, 'point': point}, function(data){
-				console.log(data);
-			}
-		);
-	}
 </script>
 </body>
 </html>

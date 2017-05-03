@@ -154,7 +154,7 @@ class UsersController extends AppController
                 $user = $this->User->read(null, $this->Auth->user()["_id"]);
                 $user["User"]["history"][$idPlaylist][$partId]= $point;
                 $this->User->save($user);
-                pr($user); exit;
+                echo json_encode($user["User"]["history"][$idPlaylist]); exit;
                 //echo $playlist["Playlist"]["_id"];
 
                 //echo $user["User"]["History"]["Can You Say That Again"]["parts"][1];  exit;

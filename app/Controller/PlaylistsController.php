@@ -35,13 +35,30 @@ class PlaylistsController extends AppController
         $this->set(compact('resultsLv1', 'resultsLv2', 'resultsLv3'));
     }
 
-
+    /**
+     * @param string $id
+     */
     public function practice($id = null){
         $playlist = $this->Playlist->find('first',array(
             'conditions'=> array('_id'=>$id)
         ));
+        $relate = $this->Playlist->find('all', array(
+            'conditions' => array(
+                'level'=> $playlist["Playlist"]["level"],
+            )
+        ));
         $this->set('playlist', $playlist);
         $this->set('idplaylist', $id);
+        $this->set('relate', $relate);
+        if($this->Auth->login()){
+            $this->loadModel('User');
+            $user = $this->User->find('first', array(
+                'conditions'=> array('_id'=> $this->Auth->user()["_id"])
+            ));
+            if(isset($user["User"]["history"][$id])){
+                $this->set('userHistory', $user["User"]["history"][$id]);
+            }
+        }
     }
 
     public function returnText(){
@@ -55,7 +72,7 @@ class PlaylistsController extends AppController
 
             echo json_encode(array(0=>$playlist["Playlist"]["text"][$keyPart],1=>$playlist["Playlist"]["name"]."/".$playlist["Playlist"]["audio"][$keyPart]));
             exit;
-    }
+        }
     }
 
 //admin-----------------------------------------------
